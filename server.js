@@ -1,12 +1,17 @@
 require("dotenv").config();
 const express = require("express");
-
+const projectRoutes = require("./routes/projectRoutes");
 const app = express();
 
-// respond with "hello ExpressJS" when a GET request is made to the homepage
-app.get("/", (req, res) => {
-  res.json({ message: "Hello ExpressJS" });
+//middlewares
+app.use(express.json());
+app.use((req, res, next) => {
+  console.log(req.path, req.method);
+  next();
 });
+
+// route
+app.use("/api/projects", projectRoutes);
 
 // port
 const PORT = process.env.PORT || 8000;
